@@ -1,0 +1,21 @@
+version: "3"
+services:
+    api:
+        build:  ./init/web
+        depends_on:
+            - db
+        ports:
+            - "3000:3000"
+            - "9229:9229"
+        environment:    
+            DB_HOST: db
+    db:
+        image: postgres:9.6-alpine
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: tweeter
+        volumes:
+            - ./init:/docker-entrypoint-initdb.d/
